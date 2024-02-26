@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", async function () {
   const genreSelect = document.getElementById("genre");
-  const movieList = document.getElementById("movie-list");
+  const movieList = document.getElementById("movies-list");
 
   const genres = await getGenres();
   genres.forEach((genre) => {
