@@ -1,42 +1,68 @@
-const apiUrl = "https://your-api-url.com/books"; // Replace with your actual API URL
+document.addEventListener("DOMContentLoaded", async function () {
+  const genreSelect = document.getElementById("genre");
+  const movieList = document.getElementById("movie-list");
 
-async function showAllBooks() {
-  try {
-    const response = await fetch(apiUrl);
+  const genres = await getGenres();
+  genres.forEach((genre) => {
+    const option = document.createElement("option");
+    option.value = genre;
+    option.textContent = genre;
+    genreSelect.appendChild(option);
+  });
+
+  filterAndRenderList();
+
+  genreSelect.addEventListener("change", filterAndRenderList);
+
+  async function getGenres() {
+    const response = await fetch("https://api.noroff.dev/api/v1/square-eyes");
     const data = await response.json();
+    const uniqueGenres = [...new Set(data.map((item) => item.genre))];
+    return uniqueGenres.filter(Boolean);
+  }
 
-    const bookList = document.getElementById("bookList");
-    bookList.innerHTML = "";
+  async function filterAndRenderList() {
+    const selectedGenre = genreSelect.value.toLowerCase();
 
-    data.forEach((book) => {
-      const listItem = document.createElement("li");
-      listItem.textContent = book.title;
-      listItem.classList.add("bookItem");
-      listItem.addEventListener("click", () => showBookDetails(book.id));
-      bookList.appendChild(listItem);
+    const response = await fetch("https://api.noroff.dev/api/v1/square-eyes");
+    const movies = await response.json();
+
+    // Filter movies based on selected genre
+    const filteredMovies = movies.filter(
+      (movie) => movie.genre.toLowerCase() === selectedGenre,
+    );
+
+    // Render the movie list
+    renderMovieList(filteredMovies);
+  }
+
+  function renderMovieList(movies) {
+    movieList.innerHTML = "";
+
+    movies.forEach((movie) => {
+      const movieCard = document.createElement("div");
+      movieCard.classList.add("movie-card");
+
+      // Clicking on the image opens the movie page
+      movieCard.innerHTML = `
+                <img class="movie-image" src="${movie.image}" alt="${movie.title}" onclick="openMoviePage('${movie.id}')">
+                <h2 class="movie-title">${movie.title}</h2>
+                <p class="movie-price">${getPriceDisplay(movie)}</p>
+            `;
+
+      movieList.appendChild(movieCard);
     });
-  } catch (error) {
-    console.error("Error fetching books:", error);
   }
-}
 
-async function showBookDetails(bookId) {
-  try {
-    const response = await fetch(`${apiUrl}/${bookId}`);
-    const book = await response.json();
+  window.openMoviePage = function (movieId) {
+    window.location.href = `product.html?id=${movieId}`;
+  };
 
-    const bookDetails = document.getElementById("bookDetails");
-    bookDetails.innerHTML = `
-      <h2>${book.title}</h2>
-      <p>Author: ${book.author}</p>
-      <p>Genre: ${book.genre}</p>
-      <p>Description: ${book.description}</p>
-      <!-- Add more details as needed -->
-    `;
-  } catch (error) {
-    console.error("Error fetching book details:", error);
+  function getPriceDisplay(movie) {
+    if (movie.discountedPrice) {
+      return `Price: ${movie.price} (Discounted: ${movie.discountedPrice})`;
+    } else {
+      return `Price: ${movie.price}`;
+    }
   }
-}
-
-// Initial load - Show first 3 books
-showAllBooks();
+});
