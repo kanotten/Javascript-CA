@@ -29,7 +29,7 @@ document.addEventListener("DOMContentLoaded", async function () {
   const pay = document.getElementById("goToPayment");
 
   pay.addEventListener("click", () => {
-    location.href = "../confirmation.html";
+    location.href = "confirmation.html";
   });
 
   renderCart();
