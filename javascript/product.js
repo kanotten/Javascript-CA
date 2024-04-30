@@ -5,23 +5,17 @@ function getProductIdFromUrl() {
 function getProductDetails(productId) {
   const productUrl = `https://api.noroff.dev/api/v1/square-eyes/${productId}`;
 
-  return fetch(productUrl)
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-      return response.json();
-    })
-    .catch((error) => {
-      console.error("Error fetching product details", error);
-      throw error;
-    });
+  return fetch(productUrl).then((response) => {
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+    return response.json();
+  });
 }
 
 function renderProductDetails(product) {
   const productContainer = document.getElementById("product-details");
   if (!productContainer) {
-    console.error("Product container not found");
     return;
   }
 
@@ -55,11 +49,7 @@ document.addEventListener("DOMContentLoaded", function () {
       .then((product) => {
         renderProductDetails(product);
       })
-      .catch((error) => {
-        console.error("Error fetching or rendering product details", error);
-      });
-  } else {
-    console.error("Product ID not found in the URL");
+      .catch((error) => {});
   }
 });
 

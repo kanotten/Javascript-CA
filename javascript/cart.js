@@ -37,8 +37,6 @@ function reduceFromCart(productId) {
 
     localStorage.setItem("cart", JSON.stringify(cartItems));
     renderCart();
-  } else {
-    console.error(`Product with ID ${productId} not found in the cart`);
   }
 }
 
