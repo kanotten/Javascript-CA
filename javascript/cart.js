@@ -13,7 +13,9 @@ function renderCart() {
 
   cartItems.forEach((item) => {
     const listItem = document.createElement("li");
-    listItem.textContent = `${item.title} x${item.quantity} - Price: ${item.price * item.quantity}`;
+    listItem.textContent = `${item.title} x${item.quantity} - Price: ${
+      item.price * item.quantity
+    }`;
     cartItemsContainer.appendChild(listItem);
     totalSum += item.price * item.quantity;
   });

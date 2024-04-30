@@ -29,7 +29,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     // Filter movies based on selected genre
     const filteredMovies = movies.filter(
-      (movie) => movie.genre.toLowerCase() === selectedGenre,
+      (movie) => movie.genre.toLowerCase() === selectedGenre
     );
 
     // Render the movie list
@@ -45,7 +45,9 @@ document.addEventListener("DOMContentLoaded", async function () {
 
       // Clicking on the image opens the movie page
       movieCard.innerHTML = `
-                <img class="movie-image" src="${movie.image}" alt="${movie.title}" onclick="openMoviePage('${movie.id}')">
+                <img class="movie-image" src="${movie.image}" alt="${
+        movie.title
+      }" onclick="openMoviePage('${movie.id}')">
                 <h2 class="movie-title">${movie.title}</h2>
                 <p class="movie-price">${getPriceDisplay(movie)}</p>
             `;
