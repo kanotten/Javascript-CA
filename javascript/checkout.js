@@ -35,4 +35,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
   renderCart();
   cart();
+
+  var button = document.querySelector("#shopbutton");
+  button.textContent = "Shopping cart (" + checkoutArray.length + ")";
 });

@@ -67,4 +67,8 @@ document.addEventListener("DOMContentLoaded", async function () {
       return `Price: ${movie.price}`;
     }
   }
+
+  var button = document.querySelector("#shopbutton");
+  const checkoutArray = JSON.parse(localStorage.getItem("cart")) || [];
+  button.textContent = "Shopping cart (" + checkoutArray.length + ")";
 });

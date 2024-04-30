@@ -117,4 +117,8 @@ function renderCart() {
 document.addEventListener("DOMContentLoaded", function () {
   const homeLink = document.getElementById("homeLink");
   homeLink.addEventListener("click", function () {});
+
+  var button = document.querySelector("#shopbutton");
+  const checkoutArray = JSON.parse(localStorage.getItem("cart")) || [];
+  button.textContent = "Shopping cart (" + checkoutArray.length + ")";
 });
