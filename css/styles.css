@@ -5,6 +5,10 @@ body {
     margin: 20px;
 }
 
+a {
+    text-decoration: none;
+}
+
 #bookList {
     list-style: none;
     padding: 0;
